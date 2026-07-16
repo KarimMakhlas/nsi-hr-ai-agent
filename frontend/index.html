@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Cockpit RH agentique — KPI de recrutement T3 2024">
+    <title>NSI Pulse · Cockpit RH</title>
+    <link rel="stylesheet" href="/static/styles.css">
+  </head>
+  <body>
+    <div id="app" class="app-shell" data-active-view="overview">
+      <aside class="sidebar" aria-label="Navigation principale">
+        <a id="home-link" class="brand" href="#main-content" aria-label="NSI Pulse, accueil">NSI <span>Pulse</span></a>
+        <nav class="nav-list">
+          <button class="nav-item is-active" data-view="overview" aria-current="page">Vue d’ensemble</button>
+          <button class="nav-item" data-view="team">Équipe</button>
+          <button class="nav-item" data-view="assistant">Assistant</button>
+        </nav>
+        <div class="system-status" id="system-status">
+          <span class="status-dot" aria-hidden="true"></span>
+          <span>Données en cours de connexion</span>
+        </div>
+      </aside>
+
+      <main class="workspace" id="main-content">
+        <header class="page-header">
+          <div><p class="eyebrow">Vue d’ensemble</p><h1 id="page-title" tabindex="-1">Pilotage recrutement</h1></div>
+          <span class="period-badge">T3 2024</span>
+        </header>
+
+        <section id="summary-region" aria-labelledby="summary-title" aria-busy="true">
+          <div class="section-heading"><h2 id="summary-title">Indicateurs clés</h2><button id="summary-retry" class="retry-button" hidden>Réessayer</button></div>
+          <p id="summary-error" class="inline-error" role="alert" hidden></p>
+          <div class="kpi-grid">
+            <article class="kpi-card"><span id="kpi-contacted" class="kpi-value">—</span><span>Candidats contactés</span><small id="kpi-source">Chargement…</small></article>
+            <article class="kpi-card"><span id="kpi-interviews" class="kpi-value">—</span><span>Entretiens</span><small id="kpi-interview-split">Chargement…</small></article>
+            <article class="kpi-card"><span id="kpi-presentations" class="kpi-value">—</span><span>Présentations client</span><small id="kpi-presentation-rate">Chargement…</small></article>
+            <article class="kpi-card"><span id="kpi-recruitments" class="kpi-value">—</span><span>Recrutements</span><small id="kpi-signature-rate">Chargement…</small></article>
+          </div>
+        </section>
+
+        <div class="dashboard-grid">
+          <section id="funnel-region" class="panel" aria-labelledby="funnel-title" aria-busy="true">
+            <div class="section-heading"><h2 id="funnel-title">Parcours de conversion</h2><span>Volumes réels</span></div>
+            <div id="funnel-bars" class="funnel-bars" aria-label="Étapes du parcours de recrutement"></div>
+            <div class="rate-grid"><div><strong id="rate-presentation">—</strong><span>Taux de présentation</span></div><div><strong id="rate-signature">—</strong><span>Taux de signature</span></div></div>
+          </section>
+
+          <section id="recruiter-region" class="panel" aria-labelledby="recruiter-title" aria-busy="true">
+            <div class="section-heading"><h2 id="recruiter-title">Équipe</h2><button id="recruiter-retry" class="retry-button" hidden>Réessayer</button></div>
+            <p id="recruiter-error" class="inline-error" role="alert" hidden></p>
+            <div id="recruiter-list" class="recruiter-list"></div>
+          </section>
+        </div>
+
+        <aside class="attention-card">
+          <span class="attention-icon" aria-hidden="true">!</span>
+          <div><strong>Point d’attention</strong><p id="attention-copy">Disponible après le chargement des KPI.</p></div>
+        </aside>
+      </main>
+
+      <div id="assistant-region" class="copilot" role="complementary" aria-labelledby="assistant-title">
+        <header class="copilot-header">
+          <div>
+            <p class="eyebrow">Copilote agentique</p>
+            <h2 id="assistant-title" tabindex="-1">Assistant RH</h2>
+            <p>Chaque question lance une analyse indépendante.</p>
+          </div>
+          <button id="assistant-clear" class="assistant-clear" type="button" disabled>Effacer</button>
+        </header>
+        <div class="suggestion-list" aria-label="Questions suggérées">
+          <button data-question="Donne-moi les 4 KPI clés du T3 2024.">Les 4 KPI clés</button>
+          <button data-question="Compare Inès et Pauline sur les mêmes indicateurs.">Comparer l’équipe</button>
+          <button data-question="Où se situe la principale friction du parcours de recrutement ?">Analyser la friction</button>
+          <button data-question="Compare nos KPI aux tendances du recrutement IA/Data en France.">Comparer au marché</button>
+        </div>
+        <div id="assistant-empty" class="assistant-empty">
+          <strong>Que souhaitez-vous analyser ?</strong>
+          <p>Interrogez les KPI RH du T3 2024.</p>
+        </div>
+        <div id="assistant-conversation" class="assistant-conversation" role="log" aria-live="polite" aria-relevant="additions text"></div>
+        <div id="assistant-live-status" class="sr-only" aria-live="polite"></div>
+        <form id="assistant-form" class="assistant-form">
+          <label class="sr-only" for="assistant-input">Votre question RH</label>
+          <textarea id="assistant-input" rows="2" minlength="3" maxlength="500" placeholder="Posez une question…" required></textarea>
+          <button id="assistant-submit" type="submit">Envoyer<span class="sr-only"> la question</span></button>
+        </form>
+      </div>
+    </div>
+    <div id="global-status" class="sr-only" aria-live="polite"></div>
+    <script type="module" src="/static/js/app.mjs"></script>
+  </body>
+</html>
