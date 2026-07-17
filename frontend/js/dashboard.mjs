@@ -52,7 +52,6 @@ export function renderSummary(payload) {
   byId("kpi-signature-rate").textContent = `${summary.signatureRate}% des présentations`;
   byId("rate-presentation").textContent = `${summary.clientPresentationRate}%`;
   byId("rate-signature").textContent = `${summary.signatureRate}%`;
-  byId("attention-copy").textContent = `Le passage entretien → présentation client affiche un taux de ${summary.clientPresentationRate}%. Les données ne permettent pas d’en établir la cause.`;
   renderFunnel(summary);
   byId("summary-region").setAttribute("aria-busy", "false");
   byId("funnel-region").setAttribute("aria-busy", "false");

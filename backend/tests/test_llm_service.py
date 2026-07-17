@@ -45,7 +45,42 @@ def test_classify_route_with_llm_parses_valid_json(monkeypatch):
     assert result == {
         "route": "analysis_agent",
         "reason": "La question demande une analyse.",
+        "search_query": "",
     }
+
+
+def test_classify_route_with_llm_keeps_a_focused_query_for_web_search(monkeypatch):
+    patch_router_completion(
+        monkeypatch,
+        json.dumps({
+            "route": "web_agent",
+            "reason": "La question demande un benchmark externe.",
+            "search_query": "benchmark KPI recrutement IA Data France 2024 2025",
+        }),
+    )
+
+    result = llm_service.classify_route_with_llm(
+        "Compare nos KPI aux tendances du recrutement IA/Data en France"
+    )
+
+    assert result["route"] == "web_agent"
+    assert result["search_query"] == "benchmark KPI recrutement IA Data France 2024 2025"
+
+
+def test_classify_route_with_llm_falls_back_to_the_question_for_blank_web_query(monkeypatch):
+    question = "Compare nos KPI aux tendances du recrutement en France"
+    patch_router_completion(
+        monkeypatch,
+        json.dumps({
+            "route": "web_agent",
+            "reason": "La question demande un benchmark externe.",
+            "search_query": " ",
+        }),
+    )
+
+    result = llm_service.classify_route_with_llm(question)
+
+    assert result["search_query"] == question
 
 
 def test_classify_route_with_llm_falls_back_on_invalid_json(monkeypatch):
@@ -56,6 +91,7 @@ def test_classify_route_with_llm_falls_back_on_invalid_json(monkeypatch):
     assert result == {
         "route": "kpi_agent",
         "reason": "Fallback: invalid JSON from router LLM",
+        "search_query": "",
     }
 
 
@@ -73,6 +109,7 @@ def test_classify_route_with_llm_falls_back_on_unknown_route(monkeypatch):
     assert result == {
         "route": "kpi_agent",
         "reason": "Fallback: unknown route from router LLM",
+        "search_query": "",
     }
 
 

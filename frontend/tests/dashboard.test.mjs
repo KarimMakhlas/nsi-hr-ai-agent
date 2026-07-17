@@ -99,7 +99,6 @@ const dashboardIds = [
   "kpi-signature-rate",
   "rate-presentation",
   "rate-signature",
-  "attention-copy",
   "system-status",
   "global-status",
   "assistant-clear",
@@ -132,7 +131,6 @@ function installDocument() {
   const overviewOnly = [
     elements.get("summary-region"),
     elements.get("funnel-region"),
-    new FakeElement("aside"),
   ];
   const navButtons = ["overview", "team", "assistant"].map((viewName) => {
     const button = new FakeElement("button");
@@ -147,7 +145,7 @@ function installDocument() {
     getElementById: (id) => elements.get(id) ?? null,
     querySelector: (selector) => selector === ".workspace > .page-header .eyebrow" ? eyebrow : null,
     querySelectorAll: (selector) => {
-      if (selector === "#summary-region, #funnel-region, .attention-card") return overviewOnly;
+      if (selector === "#summary-region, #funnel-region") return overviewOnly;
       if (selector === "[data-view]") return navButtons;
       return [];
     },

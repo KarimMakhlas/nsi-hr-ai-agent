@@ -40,6 +40,23 @@ function knownAnswerHeadingPrefix(line) {
   return null;
 }
 
+function appendInlineText(container, text) {
+  const inlinePattern = /(\*\*([^*\n]+)\*\*|\*([^*\n]+)\*|`([^`\n]+)`)/g;
+  let position = 0;
+
+  for (const match of text.matchAll(inlinePattern)) {
+    if (match.index > position) container.append(element("span", "", text.slice(position, match.index)));
+
+    if (match[2] !== undefined) container.append(element("strong", "", match[2]));
+    else if (match[3] !== undefined) container.append(element("em", "", match[3]));
+    else container.append(element("code", "", match[4]));
+
+    position = match.index + match[0].length;
+  }
+
+  if (position < text.length) container.append(element("span", "", text.slice(position)));
+}
+
 export function renderFormattedText(container, answer) {
   if (typeof answer !== "string") return;
 
@@ -49,7 +66,9 @@ export function renderFormattedText(container, answer) {
 
   const flushParagraph = () => {
     if (paragraphLines.length === 0) return;
-    container.append(element("p", "", paragraphLines.join(" ")));
+    const paragraph = element("p");
+    appendInlineText(paragraph, paragraphLines.join(" "));
+    container.append(paragraph);
     paragraphLines = [];
   };
   const flushList = () => {
@@ -88,7 +107,9 @@ export function renderFormattedText(container, answer) {
         list = element(nextListType);
         listType = nextListType;
       }
-      list.append(element("li", "", (unordered ?? ordered)[1]));
+      const item = element("li");
+      appendInlineText(item, (unordered ?? ordered)[1]);
+      list.append(item);
     } else if (line.trim() === "") {
       flushParagraph();
       flushList();

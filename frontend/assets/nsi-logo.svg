@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 210" role="img" aria-labelledby="title">
+  <title id="title">NSI, a Cegeka company</title>
+  <defs>
+    <linearGradient id="turquoise" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#b6eaf2"/>
+      <stop offset=".7" stop-color="#3ba3d1"/>
+      <stop offset="1" stop-color="#0879ad"/>
+    </linearGradient>
+    <linearGradient id="violet" x1="0" y1="0" x2="1" y2=".8">
+      <stop offset="0" stop-color="#f14647"/>
+      <stop offset=".55" stop-color="#b2388b"/>
+      <stop offset="1" stop-color="#5369b8"/>
+    </linearGradient>
+  </defs>
+  <path fill="url(#violet)" d="M16 146C7 124 8 91 30 58l18-14c-24 37-22 72-2 98 21 28 63 43 106 32-50 32-107 16-136-28Z"/>
+  <path fill="url(#turquoise)" d="M59 113C66 61 108 26 151 29c34 2 52 22 52 54 0 23-8 44-21 61l-14-32c7-13 10-26 8-38-3-18-18-27-37-24-28 5-49 29-61 64H59Z"/>
+  <path fill="#0877a9" d="M151 29c34 2 52 22 52 54 0 23-8 44-21 61l-14-32c7-13 10-26 8-38-3-18-18-27-37-24 8-8 9-15 12-21Z" opacity=".78"/>
+  <path fill="#49a8d2" d="M59 113C66 61 108 26 151 29c-30 7-54 36-64 84H59Z" opacity=".9"/>
+  <text x="183" y="132" fill="#5b5c67" font-family="Arial, Helvetica, sans-serif" font-size="127" font-weight="300" letter-spacing="-8">nsi</text>
+  <text x="208" y="177" fill="#5b5c67" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="700" letter-spacing="1">A CEGEKA COMPANY</text>
+</svg>

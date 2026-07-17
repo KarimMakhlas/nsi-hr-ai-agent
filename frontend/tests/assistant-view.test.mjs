@@ -147,6 +147,16 @@ test("formatted answers allow only paragraphs and plain-text lists", () => {
   assert.equal(container.textContent.includes("<b>sûre</b>"), true);
 });
 
+test("formatted answers render safe inline bold, italic, and code", () => {
+  const container = document.createElement("div");
+  renderFormattedText(container, "Un **KPI clé** avec *nuance* et `signature_rate`.");
+
+  assert.equal(container.querySelector("strong").textContent, "KPI clé");
+  assert.equal(container.querySelector("em").textContent, "nuance");
+  assert.equal(container.querySelector("code").textContent, "signature_rate");
+  assert.equal(container.querySelectorAll("script").length, 0);
+});
+
 test("formatted answers render only known standalone heading forms as safe h4 elements", () => {
   const container = document.createElement("div");
   renderFormattedText(
@@ -182,7 +192,7 @@ test("formatted answers split allowlisted heading prefixes from their body text"
   );
 });
 
-test("formatted answers keep inline, unknown, and list heading-like text literal", () => {
+test("formatted answers keep unknown headings and list heading-like text literal", () => {
   const container = document.createElement("div");
   renderFormattedText(
     container,
@@ -190,10 +200,13 @@ test("formatted answers keep inline, unknown, and list heading-like text literal
   );
 
   assert.equal(container.querySelectorAll("h4").length, 0);
-  assert.equal(container.querySelectorAll("strong").length, 0);
-  assert.equal(container.textContent.includes("**Faits observés**"), true);
+  assert.deepEqual(
+    container.querySelectorAll("strong").map((node) => node.textContent),
+    ["Faits observés", "Résumé"],
+  );
+  assert.equal(container.textContent.includes("**Faits observés**"), false);
   assert.equal(container.textContent.includes("Avant Hypothèses après."), true);
-  assert.equal(container.textContent.includes("**Résumé**"), true);
+  assert.equal(container.textContent.includes("**Résumé**"), false);
   assert.equal(container.textContent.includes("Résumé: Une synthèse."), true);
   assert.equal(container.querySelector("li").textContent, "Faits observés dans une puce");
 });

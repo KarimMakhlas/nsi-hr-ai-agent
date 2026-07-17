@@ -54,6 +54,14 @@ def test_web_prompt_labels_internal_and_external_evidence():
     assert "comparaison chiffrée directe" in prompt
 
 
+def test_web_prompt_rejects_irrelevant_results_and_requires_supported_claims():
+    prompt = build_web_answer_prompt("Marché ?", {}, {"results": []})
+
+    assert "directement pertinent" in prompt
+    assert "soutient directement" in prompt
+    assert "aucun résultat web pertinent" in prompt
+
+
 def test_web_prompt_answers_in_first_section_and_only_summarizes_in_conclusion():
     prompt = build_web_answer_prompt("Marché ?", {}, {"results": []})
     internal_start = prompt.index("1. Données internes")
@@ -74,3 +82,4 @@ def test_router_keeps_three_routes_and_resolves_ambiguous_examples():
     assert all(route in prompt for route in ("kpi_agent", "analysis_agent", "web_agent"))
     assert "Quel est le taux de signature ?" in prompt
     assert "Que signifie ce taux de signature ?" in prompt
+    assert '"search_query"' in prompt

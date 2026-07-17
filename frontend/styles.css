@@ -19,8 +19,8 @@ body { margin: 0; min-width: 320px; min-height: 100vh; }
 
 .app-shell { min-height: 100vh; display: grid; grid-template-columns: 200px minmax(620px, 1fr) 340px; }
 .sidebar { position: sticky; top: 0; height: 100vh; padding: 28px 20px; background: var(--color-navy); color: white; display: flex; flex-direction: column; }
-.brand { color: white; text-decoration: none; font-size: 1.25rem; font-weight: 800; }
-.brand span { color: #9294ff; }
+.brand { display: block; text-decoration: none; }
+.brand-logo { display: block; width: min(150px, 100%); height: auto; }
 .nav-list { display: grid; gap: .5rem; margin-top: 2.5rem; }
 .nav-item { border: 0; border-radius: .75rem; padding: .8rem; color: #b9c3cd; background: transparent; text-align: left; font: inherit; cursor: pointer; }
 .nav-item.is-active { color: white; background: rgb(255 255 255 / 10%); }
@@ -54,9 +54,6 @@ h1 { margin: .25rem 0 0; font-size: clamp(1.8rem, 3vw, 2.5rem); }
 .avatar { width: 1.8rem; height: 1.8rem; border-radius: .55rem; display: grid; place-items: center; color: #5558c7; background: #ecedff; }
 .recruiter-track { height: .35rem; overflow: hidden; border-radius: 999px; background: #edf0f2; }
 .recruiter-track span { display: block; height: 100%; border-radius: inherit; background: var(--color-teal); }
-.attention-card { display: grid; grid-template-columns: auto 1fr; gap: .8rem; margin-top: .8rem; padding: 1rem; border: 1px solid #f3dfd2; border-radius: 1rem; background: #fff8f3; }
-.attention-card p { margin: .25rem 0 0; color: #785f52; }
-.attention-icon { width: 2rem; height: 2rem; display: grid; place-items: center; border-radius: .65rem; color: #b85f3a; background: #ffe8d9; font-weight: 900; }
 .inline-error { color: #9d3d2f; }
 .retry-button { border: 1px solid currentColor; border-radius: .6rem; padding: .45rem .7rem; color: #4e50b8; background: white; cursor: pointer; }
 .copilot { position: sticky; top: 0; min-width: 0; min-height: 100vh; height: 100vh; max-height: 100vh; padding: 1.5rem 1.2rem; color: white; background: #101c2b; display: flex; flex-direction: column; overflow: hidden; }
@@ -79,6 +76,9 @@ h1 { margin: .25rem 0 0; font-size: clamp(1.8rem, 3vw, 2.5rem); }
 .answer-copy { line-height: 1.55; }
 .answer-copy > :first-child { margin-top: .7rem; }
 .answer-copy > :last-child { margin-bottom: 0; }
+.answer-copy strong { font-weight: 750; }
+.answer-copy em { font-style: italic; }
+.answer-copy code { padding: .08rem .28rem; border-radius: .25rem; color: #38405f; background: #eef0f4; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: .9em; }
 .agent-badge { display: inline-block; border-radius: 999px; padding: .28rem .5rem; color: #5558c7; background: #f0f0ff; font-size: .68rem; font-weight: 750; letter-spacing: .02em; }
 .presentation-block { margin-top: .9rem; }
 .presentation-title { margin: 0 0 .45rem; font-size: .8rem; }

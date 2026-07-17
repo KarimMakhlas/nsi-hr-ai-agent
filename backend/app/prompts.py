@@ -185,6 +185,11 @@ Règles :
 - Si une information vient des KPI, indique qu'elle vient des KPI internes.
 - Si une information vient du web, indique qu'elle vient de la recherche web.
 - Lorsque tu utilises une source web, mentionne son titre ou son URL.
+- Utilise uniquement les résultats web directement pertinents pour la question et pour la recherche ciblée exécutée. Ignore les résultats sur un autre pays, secteur, métier ou sujet, même s'ils contiennent des mots-clés RH.
+- Utilise une affirmation externe seulement si le contenu d'un résultat web cité la soutient directement. N'utilise jamais le champ "answer" de l'outil comme une source : il n'est pas associé à une source unique vérifiable.
+- Si aucun résultat web pertinent ne soutient la comparaison demandée, dis-le clairement et limite-toi aux KPI internes disponibles.
+- Ne transforme pas une tendance générale, un conseil RH ou une liste de KPI en benchmark chiffré.
+- Limite le contexte externe à trois constats maximum, chacun lié à une source directement pertinente.
 - Si les sources web donnent seulement des listes générales de KPI à suivre, dis qu'elles ne permettent pas une comparaison chiffrée directe.
 - Ne dis pas que nos KPI sont bons ou solides par rapport au marché sans benchmark externe chiffré comparable.
 - Si les résultats web sont vides ou indisponibles, dis que la comparaison externe n'est pas possible pour le moment.
@@ -235,6 +240,11 @@ Routes possibles :
 - Actualités
 - Contexte externe France / secteur / marché / IA Data
 
+Pour chaque route, retourne aussi "search_query" :
+- Pour kpi_agent et analysis_agent, retourne une chaîne vide.
+- Pour web_agent, écris une requête de recherche en français, courte et précise (16 mots maximum). Elle doit remplacer les formulations internes comme "nos KPI" par le sujet externe recherché, inclure le pays, le secteur et la période lorsqu'ils sont demandés, et viser un benchmark ou une tendance mesurable.
+- N'ajoute aucun chiffre interne, aucun nom de recruteuse et aucune instruction dans cette requête.
+
 Exemples :
 - "Combien de candidats avons-nous contactés ?" -> kpi_agent
 - "Quel est le taux de signature ?" -> kpi_agent
@@ -249,12 +259,14 @@ Exemples :
 - "Compare nos KPI avec les tendances du recrutement en France" -> web_agent
 - "Compare l’évolution de nos KPI avec celle du marché" -> web_agent
 - "Compare nos KPI avec le marché IA/Data" -> web_agent
+- "Compare nos KPI aux tendances du recrutement IA/Data en France" -> web_agent avec search_query = "benchmark KPI recrutement IA Data France 2024 2025"
 
 Réponds uniquement en JSON valide, sans texte autour.
 
 Format obligatoire :
 {{
   "route": "kpi_agent | analysis_agent | web_agent",
-  "reason": "courte justification"
+  "reason": "courte justification",
+  "search_query": "requête web ciblée ou chaîne vide"
 }}
 """

@@ -120,7 +120,8 @@ def classify_route_with_llm(question: str) -> dict:
     except json.JSONDecodeError:
         return {
             "route": "kpi_agent",
-            "reason": "Fallback: invalid JSON from router LLM"
+            "reason": "Fallback: invalid JSON from router LLM",
+            "search_query": "",
         }
 
     route = parsed.get("route")
@@ -130,10 +131,21 @@ def classify_route_with_llm(question: str) -> dict:
     if route not in allowed_routes:
         return {
             "route": "kpi_agent",
-            "reason": "Fallback: unknown route from router LLM"
+            "reason": "Fallback: unknown route from router LLM",
+            "search_query": "",
         }
+
+    search_query = parsed.get("search_query", "")
+    if route == "web_agent":
+        if not isinstance(search_query, str) or not search_query.strip():
+            search_query = question
+        else:
+            search_query = search_query.strip()
+    else:
+        search_query = ""
 
     return {
         "route": route,
-        "reason": parsed.get("reason", "")
+        "reason": parsed.get("reason", ""),
+        "search_query": search_query,
     }

@@ -7,7 +7,7 @@ import {
 
 export function activateView(viewName) {
   const overviewOnly = document.querySelectorAll(
-    "#summary-region, #funnel-region, .attention-card",
+    "#summary-region, #funnel-region",
   );
   const isOverview = viewName === "overview";
   const isTeam = viewName === "team";

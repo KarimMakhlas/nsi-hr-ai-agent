@@ -21,6 +21,7 @@ class AgentState(TypedDict):
     question: str
     route: str
     route_reason: str
+    search_query: str
     kpi_summary: Dict[str, Any]
     analysis: str
     web_results: Dict[str, Any]
@@ -35,15 +36,19 @@ def supervisor_agent(state: AgentState) -> AgentState:
 
         route = routing["route"]
         reason = routing["reason"]
+        search_query = routing.get("search_query", "")
 
         span.set_attribute("agent.name", "supervisor_agent")
         span.set_attribute("agent.route", route)
         span.set_attribute("agent.route_reason", reason)
+        if search_query:
+            span.set_attribute("agent.search_query", search_query)
 
         return {
             **state,
             "route": route,
             "route_reason": reason,
+            "search_query": search_query,
             "agent_path": state["agent_path"] + ["supervisor_agent"],
         }
 
@@ -121,7 +126,7 @@ def web_agent(state: AgentState) -> AgentState:
         web_results = call_mcp_tool_sync(
             "web_search",
             {
-                "query": state["question"]
+                "query": state["search_query"] or state["question"]
             }
         )
 
@@ -216,6 +221,7 @@ def run_agentic_workflow(question: str) -> AgentState:
         "question": question,
         "route": "",
         "route_reason": "",
+        "search_query": "",
         "kpi_summary": {},
         "analysis": "",
         "web_results": {},
